@@ -3,8 +3,8 @@ public class Main {
     public static void main(String[] args) {
 
         //Initial coordinates
-        int INITIAL_X = 4;
-        int INITIAL_Y = 4;
+        int INITIAL_X = 0;
+        int INITIAL_Y = 0;
         int count = 0;
 
         //Initializes the coordinates
@@ -14,7 +14,7 @@ public class Main {
         ChessBoard chessBoard = new ChessBoard();
         //Initializes the Knight
         ChessKnight chessKnight = new ChessKnight(initialChessCoordinates);
-        chessKnight.showPossibleMovements();
+        chessKnight.showPossibleMovements(chessKnight.calculatePossibleMovements());
 
     }
 }

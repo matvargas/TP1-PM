@@ -11,7 +11,7 @@ public class ChessKnight {
         this.currentCoordinates = coordinates;
     }
 
-    public void showPossibleMovements() {
+    public List<ChessCoordinates> calculatePossibleMovements() {
         List<ChessCoordinates> possibleMoviments = new ArrayList<ChessCoordinates>();
         int X_COORD, Y_CORRD;
         ChessCoordinates possibleMoviment;
@@ -81,12 +81,16 @@ public class ChessKnight {
                 possibleMoviments.add(possibleMoviment);
         }
 
+        return possibleMoviments;
+
+    }
+
+    public void showPossibleMovements(List<ChessCoordinates> possibleMoviments) {
         System.out.println("Possible Moviments:");
         for(ChessCoordinates coord : possibleMoviments){
             System.out.print("{" + coord.x + ", " + coord.y + "} ");
             System.out.println("");
         }
-
     }
 
     public boolean isValidMoviment(int X_COORD, int Y_COORD){
