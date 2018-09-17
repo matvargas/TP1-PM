@@ -84,6 +84,8 @@ public class ChessKnight {
                 possibleMoviments.add(possibleMoviment);
         }
 
+        showPossibleMovements(possibleMoviments);
+
         if(isFirstIteration) {
             for(ChessCoordinates coord : possibleMoviments){
                 List<ChessCoordinates> coords = new ArrayList<ChessCoordinates>();
@@ -150,10 +152,22 @@ public class ChessKnight {
     public boolean isValidMoviment(int X_COORD, int Y_COORD){
         if((X_COORD >= 0 && X_COORD <= 8) &&
                 (Y_COORD >= 0 && Y_COORD <= 8) &&
-                (X_COORD != this.startCoordinates.x && Y_COORD != this.startCoordinates.y)) {
+                (X_COORD != this.startCoordinates.x && Y_COORD != this.startCoordinates.y) &&
+                (doesMovimentBelongsToAnotherPath(X_COORD, Y_COORD))) {
             return true;
         }
         return false;
+    }
+
+    public boolean doesMovimentBelongsToAnotherPath(int X_COORD, int Y_COORD){
+        ChessCoordinates coord = new ChessCoordinates(X_COORD, Y_COORD);
+        for(List<ChessCoordinates> path : this.availablePaths){
+            if(path.contains(coord)) {
+                System.out.println("Path: " + path + "alredy contains: {" + X_COORD + ", " + Y_COORD + "}");
+                return false;
+            }
+        }
+        return true;
     }
 
     public void moveKnight(){
