@@ -5,7 +5,6 @@ public class ChessBoard {
     private char INITIAL_VALUE = '0';
 
     public ChessBoard() {
-        System.out.println("Building chess board");
         this.chessBoard = new char[CHESS_DIMENS][CHESS_DIMENS];
 
         for(int x = 0; x < CHESS_DIMENS; x++){
