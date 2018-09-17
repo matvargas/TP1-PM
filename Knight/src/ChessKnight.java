@@ -97,6 +97,7 @@ public class ChessKnight {
             }
             this.isFirstIteration = false;
         } else {
+            List<ChessCoordinates> pathCopy = null;
             for(List<ChessCoordinates> path : this.availablePaths){
                 if(path.contains(this.currentCoordinates)) {
                     System.out.println("Updating path container of {" +
@@ -104,10 +105,18 @@ public class ChessKnight {
                             "," +
                             this.currentCoordinates.y +
                             "}");
-                    path.addAll(possibleMoviments);
-                    showPaths();
+                    pathCopy = new ArrayList<ChessCoordinates>(path);
+                    for(ChessCoordinates coords : possibleMoviments){
+                        if(!pathCopy.contains(coords)){
+                            pathCopy.add(coords);
+                        }
+                    }
+                    this.availablePaths.remove(path);
                 }
             }
+            if(pathCopy != null)
+                this.availablePaths.add(pathCopy);
+            showPaths();
         }
 
         return possibleMoviments;
@@ -140,7 +149,8 @@ public class ChessKnight {
 
     public boolean isValidMoviment(int X_COORD, int Y_COORD){
         if((X_COORD >= 0 && X_COORD <= 8) &&
-                (Y_COORD >= 0 && Y_COORD <= 8)) {
+                (Y_COORD >= 0 && Y_COORD <= 8) &&
+                (X_COORD != this.startCoordinates.x && Y_COORD != this.startCoordinates.y)) {
             return true;
         }
         return false;
