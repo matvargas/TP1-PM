@@ -5,6 +5,7 @@ public class ChessKnight {
 
     private ChessCoordinates startCoordinates;
     private ChessCoordinates currentCoordinates;
+    private List<List<ChessCoordinates>> availablePaths = new ArrayList<List<ChessCoordinates>>();
 
     public ChessKnight(ChessCoordinates coordinates) {
         this.startCoordinates = coordinates;
@@ -81,6 +82,11 @@ public class ChessKnight {
                 possibleMoviments.add(possibleMoviment);
         }
 
+        for(ChessCoordinates coord : possibleMoviments){
+            List<ChessCoordinates> coords = new ArrayList<ChessCoordinates>();
+            coords.add(coord);
+            availablePaths.add(coords);
+        }
         return possibleMoviments;
 
     }
@@ -90,6 +96,16 @@ public class ChessKnight {
         for(ChessCoordinates coord : possibleMoviments){
             System.out.print("{" + coord.x + ", " + coord.y + "} ");
             System.out.println("");
+        }
+    }
+
+    public void showPaths() {
+        System.out.println("Possible Paths:");
+        for(List<ChessCoordinates> path : this.availablePaths){
+            for(ChessCoordinates coord : path){
+                System.out.print("{" + coord.x + ", " + coord.y + "} ");
+                System.out.println("");
+            }
         }
     }
 
