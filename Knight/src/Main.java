@@ -14,9 +14,9 @@ public class Main {
         ChessBoard chessBoard = new ChessBoard();
         //Initializes the Knight
         ChessKnight chessKnight = new ChessKnight(initialChessCoordinates);
-        //chessKnight.showPossibleMovements(chessKnight.calculatePossibleMovements());
-        chessKnight.calculatePossibleMovements();
+        chessKnight.showPossibleMovements(chessKnight.calculatePossibleMovements());
         chessKnight.showPaths();
+        chessKnight.moveKnight();
 
     }
 }
