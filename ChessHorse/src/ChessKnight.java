@@ -1,9 +1,9 @@
-public class ChessHorse {
+public class ChessKnight {
 
     private ChessCordinates startCordinates;
     private ChessCordinates currentCordinates;
 
-    public void ChessHorse() {
+    public ChessKnight() {
 
     }
 

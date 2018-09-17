@@ -1,8 +1,12 @@
 public class ChessCordinates {
 
     //X cordinate
-    int x;
+    private int x;
     // Y cordinate
-    int y;
+    private int y;
+
+    public ChessCordinates(int x, int y){
+        this.x = x; this.y = y;
+    }
 
 }

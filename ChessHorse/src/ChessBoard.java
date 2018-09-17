@@ -1,31 +1,34 @@
 public class ChessBoard {
 
-    private char chessBoard[][] = new char[8][8];
+    private char chessBoard[][];
+    private int CHESS_DIMENS = 8;
+    private char INITIAL_VALUE = '0';
 
-    public void ChessBoard(){
+    public ChessBoard() {
         System.out.println("Building chess board");
-    }
+        this.chessBoard = new char[CHESS_DIMENS][CHESS_DIMENS];
 
-    public void init() {
-        for(int x = 0; x < 8; x++){
-            for(int y = 0; y < 8; y++){
-                chessBoard[x][y] = 0;
-                System.out.print(this.chessBoard[x][y] + " ");
+        for(int x = 0; x < CHESS_DIMENS; x++){
+            for(int y = 0; y < CHESS_DIMENS; y++){
+                this.chessBoard[x][y] = INITIAL_VALUE;
             }
-            System.out.println();
         }
-
     }
 
     public void printChessBoard() {
-        System.out.println("Printing Chess board");
+        System.out.println("Chess Board Configuration");
 
-        for(int x = 0; x < 8; x++){
-            for(int y = 0; y < 8; y++){
+        int x,y;
+        System.out.println(" _________________");
+        for(x = 0; x < CHESS_DIMENS; x++){
+            System.out.print("| ");
+            for(y = 0; y < CHESS_DIMENS; y++){
                 System.out.print(this.chessBoard[x][y] + " ");
             }
+            System.out.print("|");
             System.out.println();
         }
+        System.out.println(" _________________");
     }
 
 
