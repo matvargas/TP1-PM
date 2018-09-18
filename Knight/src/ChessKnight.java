@@ -138,14 +138,13 @@ public class ChessKnight {
         System.out.println("");
     }
 
-    public void moveKnight(ChessBoard chessBoard){
+    public void moveKnight(ChessBoard chessBoard) {
 
         int counter = 0;
         if(!this.currentPath.contains(this.currentCoordinates))
             this.currentPath.add(this.currentCoordinates);
 
         List<ChessCoordinates> possibleMovements = calculatePossibleMovements(true);
-        System.out.println(possibleMovements);
         addElementsToAlternativePaths(possibleMovements.subList(1, possibleMovements.size()));
 
         while(!possibleMovements.isEmpty() && counter <= 63){
@@ -154,8 +153,6 @@ public class ChessKnight {
                 chessBoard.board[this.currentCoordinates.x][this.currentCoordinates.y] = String.format("%02d", counter  );
                 counter ++;
             }
-
-            chessBoard.printChessBoard();
 
             this.currentCoordinates = possibleMovements.get(0);
             if(!this.currentPath.contains(possibleMovements.get(0)))
