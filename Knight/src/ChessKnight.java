@@ -124,6 +124,14 @@ public class ChessKnight {
         System.out.println("");
     }
 
+    public void showAlternativePaths(){
+        System.out.println("Alternative Paths: ");
+        for(ChessCoordinates coords : this.alternativePaths) {
+            System.out.print(new ChessCoordinates().printCoordinates(coords) + " ");
+        }
+        System.out.println("");
+    }
+
     public void moveKnight(ChessBoard chessBoard){
 
         System.out.println("Starting from: " + new ChessCoordinates().printCoordinates(this.startCoordinates));
@@ -133,10 +141,11 @@ public class ChessKnight {
         showPath();
 
         List<ChessCoordinates> possibleMovements = calculatePossibleMovements();
-        while(!possibleMovements.isEmpty()){
+        this.alternativePaths = possibleMovements.subList(1, possibleMovements.size());
+        while(!possibleMovements.isEmpty() || !this.alternativePaths.isEmpty()){
 
             if(chessBoard.board[this.currentCoordinates.x][this.currentCoordinates.y] != "--") {
-                break;
+                return;
             }
 
             chessBoard.board[this.currentCoordinates.x][this.currentCoordinates.y] = String.format("%02d", counter  );
@@ -144,11 +153,25 @@ public class ChessKnight {
 
             System.out.print("[" + (counter + 1) + "]" + " Moving from: " + new ChessCoordinates().printCoordinates(this.currentCoordinates) + " ");
 
-            this.currentCoordinates = possibleMovements.get(0);
-            this.currentPath.add(possibleMovements.get(0));
+            ChessCoordinates chessCoordinates = new ChessCoordinates();
 
-            //this.alternativePaths = possibleMovements.subList(1, possibleMovements.size());
-            System.out.println("to : " + new ChessCoordinates().printCoordinates(possibleMovements.get(0)));
+            if(!possibleMovements.isEmpty()) {
+                chessCoordinates = possibleMovements.get(0);
+                this.currentCoordinates = chessCoordinates;
+                this.currentPath.add(chessCoordinates);
+            } else {
+                chessCoordinates = this.alternativePaths.get(0);
+                this.currentCoordinates = chessCoordinates;
+                this.currentPath.add(chessCoordinates);
+            }
+
+            System.out.println("to : " + new ChessCoordinates().printCoordinates(chessCoordinates));
+
+            if(!possibleMovements.isEmpty()) {
+                this.alternativePaths = possibleMovements.subList(1, possibleMovements.size());
+                showAlternativePaths();
+            }
+
             possibleMovements = calculatePossibleMovements();
             counter ++;
         }
