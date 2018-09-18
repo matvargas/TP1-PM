@@ -4,8 +4,6 @@ public class ChessCoordinates {
     int x;
     // Y cordinate
     int y;
-    //Visited
-    boolean alreadyVisited;
 
     public ChessCoordinates(){
 
@@ -13,7 +11,6 @@ public class ChessCoordinates {
 
     public ChessCoordinates(int x, int y){
         this.x = x; this.y = y;
-        alreadyVisited = false;
     }
 
     public String printCoordinates(int x, int y) {
@@ -22,6 +19,16 @@ public class ChessCoordinates {
 
     public String printCoordinates(ChessCoordinates chessCoordinates) {
         return ("{" + chessCoordinates.x + ", " + chessCoordinates.y + "}");
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        ChessCoordinates chessCoordinates = (ChessCoordinates) obj;
+        if(this.x == chessCoordinates.x && this.y == chessCoordinates.y){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

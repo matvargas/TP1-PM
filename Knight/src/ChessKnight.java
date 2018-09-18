@@ -20,32 +20,32 @@ public class ChessKnight {
 
         X_COORD = this.currentCoordinates.x - 1;
         Y_CORRD = this.currentCoordinates.y - 2;
-        if(isValidMoviment(X_COORD, Y_CORRD)) {
-            possibleMoviment = new ChessCoordinates(X_COORD, Y_CORRD);
+        possibleMoviment = new ChessCoordinates(X_COORD, Y_CORRD);
+        if(isValidMoviment(possibleMoviment)) {
             if(!possibleMoviments.contains(possibleMoviment))
                 possibleMoviments.add(possibleMoviment);
         }
 
         X_COORD = this.currentCoordinates.x - 1;
         Y_CORRD = this.currentCoordinates.y + 2;
-        if(isValidMoviment(X_COORD, Y_CORRD)) {
-            possibleMoviment = new ChessCoordinates(X_COORD, Y_CORRD);
+        possibleMoviment = new ChessCoordinates(X_COORD, Y_CORRD);
+        if(isValidMoviment(possibleMoviment)) {
             if(!possibleMoviments.contains(possibleMoviment))
                 possibleMoviments.add(possibleMoviment);
         }
 
         X_COORD = this.currentCoordinates.x + 1;
         Y_CORRD = this.currentCoordinates.y - 2;
-        if(isValidMoviment(X_COORD, Y_CORRD)) {
-            possibleMoviment = new ChessCoordinates(X_COORD, Y_CORRD);
+        possibleMoviment = new ChessCoordinates(X_COORD, Y_CORRD);
+        if(isValidMoviment(possibleMoviment)) {
             if(!possibleMoviments.contains(possibleMoviment))
                 possibleMoviments.add(possibleMoviment);
         }
 
         X_COORD = this.currentCoordinates.x + 1;
         Y_CORRD = this.currentCoordinates.y + 2;
-        if(isValidMoviment(X_COORD, Y_CORRD)) {
-            possibleMoviment = new ChessCoordinates(X_COORD, Y_CORRD);
+        possibleMoviment = new ChessCoordinates(X_COORD, Y_CORRD);
+        if(isValidMoviment(possibleMoviment)) {
             if(!possibleMoviments.contains(possibleMoviment))
                 possibleMoviments.add(possibleMoviment);
         }
@@ -53,37 +53,37 @@ public class ChessKnight {
 
         X_COORD = this.currentCoordinates.x - 2;
         Y_CORRD = this.currentCoordinates.y - 1;
-        if(isValidMoviment(X_COORD, Y_CORRD)) {
-            possibleMoviment = new ChessCoordinates(X_COORD, Y_CORRD);
+        possibleMoviment = new ChessCoordinates(X_COORD, Y_CORRD);
+        if(isValidMoviment(possibleMoviment)) {
             if(!possibleMoviments.contains(possibleMoviment))
                 possibleMoviments.add(possibleMoviment);
         }
 
         X_COORD = this.currentCoordinates.x - 2;
         Y_CORRD = this.currentCoordinates.y + 1;
-        if(isValidMoviment(X_COORD, Y_CORRD)) {
-            possibleMoviment = new ChessCoordinates(X_COORD, Y_CORRD);
+        possibleMoviment = new ChessCoordinates(X_COORD, Y_CORRD);
+        if(isValidMoviment(possibleMoviment)) {
             if(!possibleMoviments.contains(possibleMoviment))
                 possibleMoviments.add(possibleMoviment);
         }
 
         X_COORD = this.currentCoordinates.x + 2;
         Y_CORRD = this.currentCoordinates.y - 1;
-        if(isValidMoviment(X_COORD, Y_CORRD)) {
-            possibleMoviment = new ChessCoordinates(X_COORD, Y_CORRD);
+        possibleMoviment = new ChessCoordinates(X_COORD, Y_CORRD);
+        if(isValidMoviment(possibleMoviment)) {
             if(!possibleMoviments.contains(possibleMoviment))
                 possibleMoviments.add(possibleMoviment);
         }
 
         X_COORD = this.currentCoordinates.x + 2;
         Y_CORRD = this.currentCoordinates.y + 1;
-        if(isValidMoviment(X_COORD, Y_CORRD)) {
-            possibleMoviment = new ChessCoordinates(X_COORD, Y_CORRD);
+        possibleMoviment = new ChessCoordinates(X_COORD, Y_CORRD);
+        if(isValidMoviment(possibleMoviment)) {
             if(!possibleMoviments.contains(possibleMoviment))
                 possibleMoviments.add(possibleMoviment);
         }
 
-//        showPossibleMovements(possibleMoviments);
+        showPossibleMovements(possibleMoviments);
         return possibleMoviments;
 
     }
@@ -97,21 +97,19 @@ public class ChessKnight {
         }
     }
 
-    public boolean isValidMoviment(int X_COORD, int Y_COORD){
-        if((X_COORD >= 0 && X_COORD < 8) &&
-                (Y_COORD >= 0 && Y_COORD < 8) &&
-                (isAlreadyInPath(X_COORD, Y_COORD))) {
+    public boolean isValidMoviment(ChessCoordinates chessCoordinates){
+        if((chessCoordinates.x >= 0 && chessCoordinates.x < 8) &&
+                (chessCoordinates.y >= 0 && chessCoordinates.y < 8) &&
+                (isAlreadyInPath(chessCoordinates))) {
             return true;
         }
         return false;
     }
 
-    public boolean isAlreadyInPath(int X_COORD, int Y_COORD){
+    public boolean isAlreadyInPath(ChessCoordinates chessCoordinates){
 
-        for(ChessCoordinates coords : this.currentPath) {
-            if(coords.x == X_COORD && coords.y == Y_COORD) {
-                return false;
-            }
+        if(this.currentPath.contains(chessCoordinates)) {
+            return false;
         }
         return true;
     }
@@ -138,10 +136,10 @@ public class ChessKnight {
 
         int counter = 0;
         this.currentPath.add(this.currentCoordinates);
-        showPath();
 
         List<ChessCoordinates> possibleMovements = calculatePossibleMovements();
         addElementsToAlternativePaths(possibleMovements.subList(1, possibleMovements.size()));
+
         while(!possibleMovements.isEmpty()){
 
             if(chessBoard.board[this.currentCoordinates.x][this.currentCoordinates.y] == "--") {
@@ -156,28 +154,36 @@ public class ChessKnight {
 
             this.currentCoordinates = possibleMovements.get(0);
             this.currentPath.add(possibleMovements.get(0));
+            showPath();
+
 
             System.out.println("to : " + new ChessCoordinates().printCoordinates(possibleMovements.get(0)));
 
             addElementsToAlternativePaths(possibleMovements.subList(1, possibleMovements.size()));
 
             possibleMovements = calculatePossibleMovements();
+
             if(possibleMovements.isEmpty()) {
-               this.currentCoordinates = this.alternativePaths.get(this.alternativePaths.size() - 1);
-               this.alternativePaths.remove(this.alternativePaths.size() - 1);
-               possibleMovements = calculatePossibleMovements();
+                while(possibleMovements.isEmpty()) {
+                    System.out.println("Using alternative paths");
+
+                    if(this.alternativePaths.size() > 0){
+                        this.currentCoordinates = this.alternativePaths.get(this.alternativePaths.size() - 1);
+                        this.alternativePaths.remove(this.alternativePaths.size() - 1);
+                        possibleMovements = calculatePossibleMovements();
+                    }else{
+                        break;
+                    }
+                    System.out.println(possibleMovements);
+                }
             }
-
-
         }
     }
 
     public void addElementsToAlternativePaths(List<ChessCoordinates> list) {
         for(ChessCoordinates coord : list) {
-            for(ChessCoordinates alternativeCoord : this.alternativePaths){
-                if((coord.x != alternativeCoord.x) && (coord.y != alternativeCoord.y)) {
-                    this.alternativePaths.add(coord);
-                }
+            if(!this.alternativePaths.contains(coord)){
+                this.alternativePaths.add(coord);
             }
         }
         showAlternativePaths();
