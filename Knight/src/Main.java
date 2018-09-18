@@ -15,6 +15,7 @@ public class Main {
         //Initializes the Knight
         ChessKnight chessKnight = new ChessKnight(initialChessCoordinates);
         chessKnight.moveKnight(board);
+        board.printChessBoard();
 
     }
 }

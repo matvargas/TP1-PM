@@ -4,6 +4,8 @@ public class ChessCoordinates {
     int x;
     // Y cordinate
     int y;
+    //Visited
+    boolean alreadyVisited;
 
     public ChessCoordinates(){
 
@@ -11,6 +13,7 @@ public class ChessCoordinates {
 
     public ChessCoordinates(int x, int y){
         this.x = x; this.y = y;
+        alreadyVisited = false;
     }
 
     public String printCoordinates(int x, int y) {
