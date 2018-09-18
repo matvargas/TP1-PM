@@ -84,7 +84,6 @@ public class ChessKnight {
                 possibleMoviments.add(possibleMoviment);
         }
 
-//        showPossibleMovements(possibleMoviments);
         return possibleMoviments;
 
     }
@@ -122,24 +121,9 @@ public class ChessKnight {
         return false;
     }
 
-    public void showPath(){
-        System.out.println("Path: ");
-        for(ChessCoordinates coords : this.currentPath) {
-            System.out.print(new ChessCoordinates().printCoordinates(coords) + " ");
-        }
-        System.out.println("");
-    }
-
-    public void showAlternativePaths(){
-        System.out.println("Alternative Paths: ");
-        for(ChessCoordinates coords : this.alternativePaths) {
-            System.out.print(new ChessCoordinates().printCoordinates(coords) + " ");
-        }
-        System.out.println("");
-    }
-
     public void moveKnight(ChessBoard chessBoard) {
 
+        int numberOfIterations = 1;
         int counter = 0;
         if(!this.currentPath.contains(this.currentCoordinates))
             this.currentPath.add(this.currentCoordinates);
@@ -148,6 +132,7 @@ public class ChessKnight {
         addElementsToAlternativePaths(possibleMovements.subList(1, possibleMovements.size()));
 
         while(!possibleMovements.isEmpty() && counter <= 63){
+            numberOfIterations ++;
 
             if(chessBoard.board[this.currentCoordinates.x][this.currentCoordinates.y] == "--") {
                 chessBoard.board[this.currentCoordinates.x][this.currentCoordinates.y] = String.format("%02d", counter  );
@@ -174,6 +159,7 @@ public class ChessKnight {
                 }
             }
         }
+        System.out.println("Number of iterations " + numberOfIterations);
     }
 
     public void addElementsToAlternativePaths(List<ChessCoordinates> list) {
