@@ -19,9 +19,9 @@ public class ChessBoard {
 
         int x,y;
         System.out.println(" _________________________");
-        for(x = 0; x < CHESS_DIMENS; x++){
+        for(y = 0; y < CHESS_DIMENS; y++){
             System.out.print("| ");
-            for(y = 0; y < CHESS_DIMENS; y++){
+            for(x = 0; x < CHESS_DIMENS; x++){
                 System.out.print(board[x][y] + " ");
             }
             System.out.print("|");

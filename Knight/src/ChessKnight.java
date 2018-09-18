@@ -6,6 +6,7 @@ public class ChessKnight {
     private ChessCoordinates startCoordinates;
     private ChessCoordinates currentCoordinates;
     private List<ChessCoordinates> currentPath = new ArrayList<ChessCoordinates>();
+    private List<ChessCoordinates> alternativePaths = new ArrayList<ChessCoordinates>();
 
     public ChessKnight(ChessCoordinates coordinates) {
         this.startCoordinates = coordinates;
@@ -133,11 +134,20 @@ public class ChessKnight {
 
         List<ChessCoordinates> possibleMovements = calculatePossibleMovements();
         while(!possibleMovements.isEmpty()){
-            chessBoard.board[this.currentCoordinates.x][this.currentCoordinates.y] = String.format("%02d", counter);
+
+            if(chessBoard.board[this.currentCoordinates.x][this.currentCoordinates.y] != "--") {
+                break;
+            }
+
+            chessBoard.board[this.currentCoordinates.x][this.currentCoordinates.y] = String.format("%02d", counter  );
             chessBoard.printChessBoard();
-            System.out.print("Moving from: " + new ChessCoordinates().printCoordinates(this.currentCoordinates) + " ");
+
+            System.out.print("[" + (counter + 1) + "]" + " Moving from: " + new ChessCoordinates().printCoordinates(this.currentCoordinates) + " ");
+
             this.currentCoordinates = possibleMovements.get(0);
             this.currentPath.add(possibleMovements.get(0));
+
+            //this.alternativePaths = possibleMovements.subList(1, possibleMovements.size());
             System.out.println("to : " + new ChessCoordinates().printCoordinates(possibleMovements.get(0)));
             possibleMovements = calculatePossibleMovements();
             counter ++;
