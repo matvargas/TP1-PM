@@ -84,7 +84,7 @@ public class ChessKnight {
                 possibleMoviments.add(possibleMoviment);
         }
 
-        showPossibleMovements(possibleMoviments);
+//        showPossibleMovements(possibleMoviments);
         return possibleMoviments;
 
     }
@@ -102,27 +102,21 @@ public class ChessKnight {
         if((chessCoordinates.x >= 0 && chessCoordinates.x < 8) &&
                 (chessCoordinates.y >= 0 && chessCoordinates.y < 8) ) {
 
-            System.out.println("Verifying : " + new ChessCoordinates().printCoordinates(chessCoordinates));
             if(!shouldVerifyInPath) {
-                System.out.println("True without verifying path");
                 return true;
             } else {
                 if(isAlreadyInPath(chessCoordinates)){
-                    System.out.println("False, already in path");
                     return false;
                 }
-                System.out.println("True is not in path");
                 return true;
             }
         }
-        System.out.println("Coordinate not valid");
         return false;
     }
 
     public boolean isAlreadyInPath(ChessCoordinates chessCoordinates){
 
         if(this.currentPath.contains(chessCoordinates)) {
-            System.out.println("Already contains " +  new ChessCoordinates().printCoordinates(chessCoordinates));
             return true;
         }
         return false;
@@ -146,8 +140,6 @@ public class ChessKnight {
 
     public void moveKnight(ChessBoard chessBoard){
 
-        System.out.println("Starting from: " + new ChessCoordinates().printCoordinates(this.startCoordinates));
-
         int counter = 0;
         if(!this.currentPath.contains(this.currentCoordinates))
             this.currentPath.add(this.currentCoordinates);
@@ -156,23 +148,18 @@ public class ChessKnight {
         System.out.println(possibleMovements);
         addElementsToAlternativePaths(possibleMovements.subList(1, possibleMovements.size()));
 
-        while(!possibleMovements.isEmpty()){
+        while(!possibleMovements.isEmpty() && counter <= 63){
 
             if(chessBoard.board[this.currentCoordinates.x][this.currentCoordinates.y] == "--") {
-                System.out.println("Setting " + (counter) + " on " + new ChessCoordinates().printCoordinates(this.currentCoordinates));
                 chessBoard.board[this.currentCoordinates.x][this.currentCoordinates.y] = String.format("%02d", counter  );
                 counter ++;
             }
 
             chessBoard.printChessBoard();
 
-            System.out.print("[" + counter + "]" + " Moving from: " + new ChessCoordinates().printCoordinates(this.currentCoordinates) + " ");
-
             this.currentCoordinates = possibleMovements.get(0);
             if(!this.currentPath.contains(possibleMovements.get(0)))
                 this.currentPath.add(possibleMovements.get(0));
-
-            System.out.println("to : " + new ChessCoordinates().printCoordinates(possibleMovements.get(0)));
 
             addElementsToAlternativePaths(possibleMovements.subList(1, possibleMovements.size()));
 
@@ -180,8 +167,6 @@ public class ChessKnight {
 
             if(possibleMovements.isEmpty()) {
                 while(possibleMovements.isEmpty()) {
-                    System.out.println("Using alternative paths");
-
                     if(this.alternativePaths.size() > 0){
                         this.currentCoordinates = this.alternativePaths.get(this.alternativePaths.size() - 1);
                         this.alternativePaths.remove(this.alternativePaths.size() - 1);
@@ -189,7 +174,6 @@ public class ChessKnight {
                     }else{
                         break;
                     }
-                    System.out.println(possibleMovements);
                 }
             }
         }
@@ -202,7 +186,6 @@ public class ChessKnight {
                 this.alreadyTested.add(coord);
             }
         }
-        showAlternativePaths();
     }
 
 }
