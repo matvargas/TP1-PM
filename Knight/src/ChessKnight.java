@@ -5,13 +5,11 @@ public class ChessKnight {
 
     private ChessCoordinates startCoordinates;
     private ChessCoordinates currentCoordinates;
-    private List<List<ChessCoordinates>> availablePaths = new ArrayList<List<ChessCoordinates>>();
-    private boolean isFirstIteration;
+    private List<ChessCoordinates> currentPath = new ArrayList<ChessCoordinates>();
 
     public ChessKnight(ChessCoordinates coordinates) {
         this.startCoordinates = coordinates;
         this.currentCoordinates = coordinates;
-        this.isFirstIteration = true;
     }
 
     public List<ChessCoordinates> calculatePossibleMovements() {
@@ -85,103 +83,64 @@ public class ChessKnight {
         }
 
         showPossibleMovements(possibleMoviments);
-
-        if(isFirstIteration) {
-            for(ChessCoordinates coord : possibleMoviments){
-                List<ChessCoordinates> coords = new ArrayList<ChessCoordinates>();
-                coords.add(coord);
-                System.out.println("Creating path starting on {" +
-                        coord.x +
-                        "," +
-                        coord.y +
-                        "}");
-                this.availablePaths.add(coords);
-            }
-            this.isFirstIteration = false;
-        } else {
-            List<ChessCoordinates> pathCopy = null;
-            for(List<ChessCoordinates> path : this.availablePaths){
-                if(path.contains(this.currentCoordinates)) {
-                    System.out.println("Updating path container of {" +
-                            this.currentCoordinates.x +
-                            "," +
-                            this.currentCoordinates.y +
-                            "}");
-                    pathCopy = new ArrayList<ChessCoordinates>(path);
-                    for(ChessCoordinates coords : possibleMoviments){
-                        if(!pathCopy.contains(coords)){
-                            pathCopy.add(coords);
-                        }
-                    }
-                    this.availablePaths.remove(path);
-                }
-            }
-            if(pathCopy != null)
-                this.availablePaths.add(pathCopy);
-            showPaths();
-        }
-
         return possibleMoviments;
 
     }
 
     public void showPossibleMovements(List<ChessCoordinates> possibleMoviments) {
         System.out.print("Possible moviments ");
-        System.out.println("for the current location: "
-                + "{" + this.currentCoordinates.x
-                + ","
-                + this.currentCoordinates.y
-                + "}");
+        System.out.println("for the current location: " + new ChessCoordinates().printCoordinates(this.currentCoordinates));
         for(ChessCoordinates coord : possibleMoviments){
-            System.out.print("{" + coord.x + ", " + coord.y + "} ");
-            System.out.println("");
-        }
-    }
-
-    public void showPaths() {
-        System.out.println("Possible Paths:");
-        for(List<ChessCoordinates> path : this.availablePaths){
-            System.out.print("Path: ");
-            for(ChessCoordinates coord : path){
-                System.out.print("{" + coord.x + ", " + coord.y + "} ");
-            }
+            System.out.print(new ChessCoordinates().printCoordinates(coord));
             System.out.println("");
         }
     }
 
     public boolean isValidMoviment(int X_COORD, int Y_COORD){
-        if((X_COORD >= 0 && X_COORD <= 8) &&
-                (Y_COORD >= 0 && Y_COORD <= 8) &&
-                (X_COORD != this.startCoordinates.x && Y_COORD != this.startCoordinates.y) &&
-                (doesMovimentBelongsToAnotherPath(X_COORD, Y_COORD))) {
+        if((X_COORD >= 0 && X_COORD < 8) &&
+                (Y_COORD >= 0 && Y_COORD < 8) &&
+                (isAlreadyInPath(X_COORD, Y_COORD))) {
             return true;
         }
         return false;
     }
 
-    public boolean doesMovimentBelongsToAnotherPath(int X_COORD, int Y_COORD){
-        ChessCoordinates coord = new ChessCoordinates(X_COORD, Y_COORD);
-        for(List<ChessCoordinates> path : this.availablePaths){
-            if(path.contains(coord)) {
-                System.out.println("Path: " + path + "alredy contains: {" + X_COORD + ", " + Y_COORD + "}");
+    public boolean isAlreadyInPath(int X_COORD, int Y_COORD){
+
+        for(ChessCoordinates coords : this.currentPath) {
+            if(coords.x == X_COORD && coords.y == Y_COORD) {
                 return false;
             }
         }
         return true;
     }
 
-    public void moveKnight(){
+    public void showPath(){
+        System.out.println("Path: ");
+        for(ChessCoordinates coords : this.currentPath) {
+            System.out.print(new ChessCoordinates().printCoordinates(coords) + " ");
+        }
+        System.out.println("");
+    }
 
-        //Creates a copy of paths list
-        List<List<ChessCoordinates>> pathsCopy = new ArrayList<List<ChessCoordinates>>(this.availablePaths);
+    public void moveKnight(ChessBoard chessBoard){
 
-        for(List<ChessCoordinates> path : pathsCopy){
-            for(ChessCoordinates coord : path){
-                System.out.print("Moving knight from: {" + this.currentCoordinates.x + ", " + this.currentCoordinates.y + "} ");
-                this.currentCoordinates = coord;
-                System.out.println("to: {" + this.currentCoordinates.x + ", " + this.currentCoordinates.y + "}");
-                calculatePossibleMovements();
-            }
+        System.out.println("Starting from: " + new ChessCoordinates().printCoordinates(this.startCoordinates));
+
+        int counter = 0;
+        this.currentPath.add(this.currentCoordinates);
+        showPath();
+
+        List<ChessCoordinates> possibleMovements = calculatePossibleMovements();
+        while(!possibleMovements.isEmpty()){
+            chessBoard.board[this.currentCoordinates.x][this.currentCoordinates.y] = String.format("%02d", counter);
+            chessBoard.printChessBoard();
+            System.out.print("Moving from: " + new ChessCoordinates().printCoordinates(this.currentCoordinates) + " ");
+            this.currentCoordinates = possibleMovements.get(0);
+            this.currentPath.add(possibleMovements.get(0));
+            System.out.println("to : " + new ChessCoordinates().printCoordinates(possibleMovements.get(0)));
+            possibleMovements = calculatePossibleMovements();
+            counter ++;
         }
     }
 

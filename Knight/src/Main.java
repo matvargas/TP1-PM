@@ -11,12 +11,10 @@ public class Main {
         ChessCoordinates initialChessCoordinates = new ChessCoordinates(INITIAL_X,INITIAL_Y);
 
         //Iniztializes the board
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard board = new ChessBoard();
         //Initializes the Knight
         ChessKnight chessKnight = new ChessKnight(initialChessCoordinates);
-        chessKnight.calculatePossibleMovements();
-        chessKnight.showPaths();
-        chessKnight.moveKnight();
+        chessKnight.moveKnight(board);
 
     }
 }
