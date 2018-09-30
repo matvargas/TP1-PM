@@ -159,6 +159,7 @@ public class ChessKnight {
                 }
             }
         }
+        chessBoard.printChessBoard();
         System.out.println("Number of iterations " + numberOfIterations);
     }
 

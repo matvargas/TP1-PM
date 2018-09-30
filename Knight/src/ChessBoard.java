@@ -15,7 +15,7 @@ public class ChessBoard {
     }
 
     public void printChessBoard() {
-        System.out.println("Chess Board Configuration");
+        System.out.println("Board final configuration");
 
         int x,y;
         System.out.println(" _________________________");

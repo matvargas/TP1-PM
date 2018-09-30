@@ -1,25 +1,28 @@
+import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
+        for(int i = 0; i < 6; i ++){
 
-        //Initial coordinates
-        int INITIAL_X;
-        int INITIAL_Y;
-        int count = 0;
+            Random rand = new Random();
 
+            //Initial coordinates
+            int INITIAL_X = rand.nextInt(7) + 0;
+            int INITIAL_Y = rand.nextInt(7) + 0;
 
-        for(INITIAL_Y = 0; INITIAL_Y < 8; INITIAL_Y++){
-            for(INITIAL_X = 0; INITIAL_X < 8; INITIAL_X ++){
-                //Initializes the coordinates
-                ChessCoordinates initialChessCoordinates = new ChessCoordinates(INITIAL_X,INITIAL_Y);
+            System.out.println("Starting Tour from " + new ChessCoordinates().printCoordinates(INITIAL_X,INITIAL_Y));
 
-                //Iniztializes the board
-                ChessBoard board = new ChessBoard();
-                //Initializes the Knight
-                ChessKnight chessKnight = new ChessKnight(initialChessCoordinates);
-                chessKnight.moveKnight(board);
-                board.printChessBoard();
-            }
+            //Initializes the coordinates
+            ChessCoordinates initialChessCoordinates = new ChessCoordinates(INITIAL_X,INITIAL_Y);
+
+            //Iniztializes the board
+            ChessBoard board = new ChessBoard();
+            //Initializes the Knight
+            ChessKnight chessKnight = new ChessKnight(initialChessCoordinates);
+            long start = System.currentTimeMillis();
+            chessKnight.moveKnight(board);
+            long end = System.currentTimeMillis();
+            System.out.println("It took " + (end - start) + " ms" + "\n");
         }
 
     }
