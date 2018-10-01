@@ -3,7 +3,7 @@ public class Main {
 
     public static void main(String[] args) {
         for(int i = 0; i < 6; i ++){
-
+            long start = System.currentTimeMillis();
             Random rand = new Random();
 
             //Initial coordinates
@@ -19,7 +19,6 @@ public class Main {
             ChessBoard board = new ChessBoard();
             //Initializes the Knight
             ChessKnight chessKnight = new ChessKnight(initialChessCoordinates);
-            long start = System.currentTimeMillis();
             chessKnight.moveKnight(board);
             long end = System.currentTimeMillis();
             System.out.println("It took " + (end - start) + " ms" + "\n");
